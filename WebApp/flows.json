@@ -1,0 +1,524 @@
+[
+    {
+        "id": "60a45a6b7b7fd721",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "60516f6ee3d4a642",
+        "type": "ui_chart",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "group": "8fc590923fe2cf49",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "bar",
+        "legend": "true",
+        "xformat": "IO",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 810,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "28891e37a4c3ce23",
+        "type": "mqtt in",
+        "z": "60a45a6b7b7fd721",
+        "name": "Devices",
+        "topic": "smart-wm/#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "28f7ceb9.8189a2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 110,
+        "y": 320,
+        "wires": [
+            [
+                "f19a7289e93a096f",
+                "c20181f76c18faea",
+                "ba13e561f1daa0a8",
+                "c2c86a2aafbdd86d"
+            ]
+        ]
+    },
+    {
+        "id": "bd85f1b94aa1916e",
+        "type": "debug",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "options",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f19a7289e93a096f",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "getDevice",
+        "func": "var mAddress=msg.topic;\nvar dataV=msg.payload;\nvar localArray=[];\nvar localDataArray=[];\nvar ar=flow.get('arGlobal') ;\n\nif(ar.includes(mAddress)==false){\n    localArray=ar;\n    // dataV=mAddress;\n    localArray.push(mAddress);\n    flow.set('arGlobal',localArray);\n    \n    let id=ar.indexOf(mAddress);\n    let arData=flow.get('arGlobalData') ;\n    localDataArray=arData;\n    localDataArray[id]=dataV.slice(0,-1);\n    flow.set('arGlobalData',localDataArray);\n\n}\nelse{\n    let id=ar.indexOf(mAddress);\n    let arData=flow.get('arGlobalData') ;\n    localDataArray=arData;\n    localDataArray[id]=dataV.slice(0,-1);\n    flow.set('arGlobalData',localDataArray);\n   \n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e4ef5e41e2bc0c5",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "initArray",
+        "func": "\nvar localArray=[];\nvar localArray2=[];\nvar selected=\"\";\n    \n    \n    flow.set('arGlobal',localArray);\n    flow.set('selected',selected);\n    flow.set('arGlobalData',localArray2);\n\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4d2f5f5206c4e78",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "getArray",
+        "func": "var mAddress=msg.topic;\nvar localArray=[];\nvar ar=flow.get('arGlobal') ;\nvar arData=flow.get('arGlobalData') ;\nvar sel=flow.get('selected') ;\nmsg.payload={ar,arData,sel};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "031f67542add2ad3"
+            ]
+        ]
+    },
+    {
+        "id": "02e8dbc18d4dacb0",
+        "type": "inject",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "0e4ef5e41e2bc0c5"
+            ]
+        ]
+    },
+    {
+        "id": "031f67542add2ad3",
+        "type": "debug",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f7e8b4375beef41f",
+        "type": "inject",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "c4d2f5f5206c4e78"
+            ]
+        ]
+    },
+    {
+        "id": "c20181f76c18faea",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "getData",
+        "func": "var ar=flow.get('arGlobal') ;\nvar arData=flow.get('arGlobalData') ;\nvar sel=flow.get('selected') ;\nvar id=ar.indexOf(sel);\nvar datSet=arData[id].split(\",\");\nvar dS=[ar[id],datSet];\nflow.set('ds',dS);\n\n\n\nvar d=[{\n    \"series\": [ ar[id]+\" Gallons\"],\n    \"data\": [ datSet ],\n    \"labels\": [ \"IO1\", \"IO2\", \"IO3\" ,\"IO4\",\"IO5\",\"IO6\",\"IO7\",\"IO8\",\"IO9\",\"IO10\"]\n}];\nmsg.payload=d;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 460,
+        "wires": [
+            [
+                "60516f6ee3d4a642",
+                "031f67542add2ad3"
+            ]
+        ]
+    },
+    {
+        "id": "802b29d3e6418dec",
+        "type": "inject",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3075df5a73f9691d",
+        "type": "ui_dropdown",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "8fc590923fe2cf49",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "b21ebb1f1dfb9a7f",
+                "0919e83fb1afe054"
+            ]
+        ]
+    },
+    {
+        "id": "554a331da9e6caed",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "populateDropdown",
+        "func": "var mAddress=msg.topic;\nvar dataV=msg.payload;\nlet localArray=[];\nlet ar=flow.get('arGlobal') ;\nlocalArray=ar;\nlet g;\n// for (let i=0;i<localArray.length;i++){\n//     g=localArray[i].split('/');\n//     localArray[i]=g[1];\n// }\n\nmsg.options=localArray;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "bd85f1b94aa1916e",
+                "3075df5a73f9691d"
+            ]
+        ]
+    },
+    {
+        "id": "b21ebb1f1dfb9a7f",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "setSelection",
+        "func": "var selVal=msg.payload;\nflow.set('selected',selVal);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df245570082df40f",
+        "type": "inject",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 490,
+        "y": 500,
+        "wires": [
+            [
+                "c20181f76c18faea"
+            ]
+        ]
+    },
+    {
+        "id": "33e673447653d630",
+        "type": "inject",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 280,
+        "wires": [
+            [
+                "554a331da9e6caed"
+            ]
+        ]
+    },
+    {
+        "id": "0919e83fb1afe054",
+        "type": "debug",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "1086aa04b15eb867",
+        "type": "ui_button",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "group": "8fc590923fe2cf49",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 300,
+        "y": 520,
+        "wires": [
+            [
+                "554a331da9e6caed"
+            ]
+        ]
+    },
+    {
+        "id": "ba13e561f1daa0a8",
+        "type": "function",
+        "z": "60a45a6b7b7fd721",
+        "name": "dropDownRefresher",
+        "func": "var mAddress=msg.topic;\nvar dataV=msg.payload;\nvar localArray=[];\nvar localDataArray=[];\nvar ar=flow.get('arGlobal') ;\n\nif(ar.includes(mAddress)==false){\n    localArray=ar;\n    // dataV=mAddress;\n    localArray.push(mAddress);\n    flow.set('arGlobal',localArray);\n    \n    let id=ar.indexOf(mAddress);\n    let arData=flow.get('arGlobalData') ;\n    localDataArray=arData;\n    localDataArray[id]=dataV.slice(0,-1);\n    flow.set('arGlobalData',localDataArray);\n\n}\nelse{\n    let id=ar.indexOf(mAddress);\n    let arData=flow.get('arGlobalData') ;\n    localDataArray=arData;\n    localDataArray[id]=dataV.slice(0,-1);\n    flow.set('arGlobalData',localDataArray);\n   \n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2c86a2aafbdd86d",
+        "type": "rbe",
+        "z": "60a45a6b7b7fd721",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "topic",
+        "topi": "topic",
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "554a331da9e6caed"
+            ]
+        ]
+    },
+    {
+        "id": "8fc590923fe2cf49",
+        "type": "ui_group",
+        "name": "Water Meter Monitor",
+        "tab": "8161cab506a7925a",
+        "order": 1,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "28f7ceb9.8189a2",
+        "type": "mqtt-broker",
+        "name": "hivemq",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "23o4oj123kn41lk2tlk14g3234",
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8161cab506a7925a",
+        "type": "ui_tab",
+        "name": "Water Meter Monitor",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

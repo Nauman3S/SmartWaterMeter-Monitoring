@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="artwork/SmartAgri.png" alt="Project logo"></a>
+ <img width=200px height=200px src="artwork/watermeter.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Smart Water Meter Monitoring</h3>
@@ -94,11 +94,10 @@ Follow the pinout diagram given below to connect different components to your ES
 
 ![Pinout](Circuit/ESP32-Pinout.jpg)
 
-### Complete Circuit Diagram
+### GPIOs for connection
 
-Here's the complete circuit diagram of the system.
-
-![CircuitDiagram](Circuit/Circuit_bb.png)
+The following 10 GPIOs are available to be used
+-   12, 19, 18, 5, 25, 26, 4, 15, 27, 14
 
 ## Server Details <a name = "server"></a>
 ### Specifications
@@ -119,12 +118,11 @@ Here's the complete circuit diagram of the system.
 ### Server Links <a name = "srv"></a>
 
 - MQTT Broker Link: hivemq.com
-- Backend Link: http://smart-agri-backend.iot.intelligadgets.me/
-- Frontend Link: https://smart-agri-frontend.iot.intelligadgets.me/
+- Frontend Link: https://nodered-proxy.production.wrapdrive.tech/ui/#!/1
 
 ### Backend
 
-- Backend is based on NodeJS and it is being managed by Caprover. It starts automatically on server start.
+- Backend is based on NodeRED and it is being managed by Caprover. It starts automatically on server start.
 
 ## MQTT Topic Details <a name = "mqtt"></a>
 
@@ -150,6 +148,8 @@ Here's the complete circuit diagram of the system.
 10.  You can open settings page with following default credentials
      1.  User: **AP Name (SmartWM)**
      2.  Password: **admin**
+
+11. Now you can open the dashboard and can select the active device from dropdown to see its total gallons on all 10 GPIO Pins ![SCR](artwork/scr1.png)
 
 ## List of Components <a name = "list"></a>
 
