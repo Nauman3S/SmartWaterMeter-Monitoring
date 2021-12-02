@@ -145,8 +145,8 @@ void setup() //main setup functions
             //portal.config(hostName.c_str(), apPass.c_str());
             // portal.config(hostName.c_str(), "123456789AP");
             config.apid = hostName + "-" + String(GET_CHIPID(), HEX);
-            config.password = apPass;
-            config.psk = apPass;
+            // config.password = apPass;
+            // config.psk = apPass;
             // portal.config(hostName.c_str(), "123456789AP");
             Serial.println("(from hostELM) hostname set to " + hostName);
         }
@@ -156,8 +156,8 @@ void setup() //main setup functions
             // hostName = String("OEE");;
             // portal.config(hostName.c_str(), "123456789AP");
             config.apid = hostName + "-" + String(GET_CHIPID(), HEX);
-            config.password = apPass;
-            config.psk = apPass;
+            // config.password = apPass;
+            // config.psk = apPass;
             //config.hostName = hostName;//hostnameElm.value+ "-" + String(GET_CHIPID(), HEX);
             // portal.config(hostName.c_str(), "123456789AP");
             Serial.println("hostname set to " + hostName);

@@ -138,7 +138,7 @@ The following 10 GPIOs are available to be used
 1.  Upload the code to your ESP32.
 2.  Open the dashboard to monitor the parameters. 
 3. Power on your ESP32, it will present you with an AP named `SmartWM-abc` (while `SmartWM` can be changed in the portal and `abc` is a unique id for each esp32)
-4. Default captive portal password `12345678AP` which can be changed in captive portal. 
+4. Default captive portal password `12345678` which can be changed in captive portal. 
 5. Connect to the ESP32 access point and open the web-browser and navigate to the link `http://esp32.local/_ac`. This link will work on most of the operating systems but if your operating system is not allowing to open it, you may want to check the captive portal IP Address from the serial monitor and can use that IP address inplace of the above mentioned URL. 
 6. The default access IP Address is `http://192.168.4.1/_ac` 8. You will be presented with a main dashboard as shown below(based on your device)
 ![SCR1](Circuit/scr1.png)
